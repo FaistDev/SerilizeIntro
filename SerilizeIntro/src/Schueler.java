@@ -10,6 +10,8 @@ import java.time.LocalDate;
 /**
  *
  * @author Ben
+ * 
+ * mit .gitingnore build und dist werden nicht von git beachtet und hochgeladen
  */
 public class Schueler {
     private String name;
