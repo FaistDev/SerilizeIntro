@@ -59,6 +59,8 @@ public class SchuelerBL {
         File f = new File("./data.csv");
         try{
             bl.save(f);
+            
+            bl.load(f);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
