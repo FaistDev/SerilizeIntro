@@ -1,4 +1,5 @@
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 /*
@@ -13,7 +14,7 @@ import java.time.LocalDate;
  * 
  * mit .gitingnore build und dist werden nicht von git beachtet und hochgeladen
  */
-public class Schueler {
+public class Schueler implements Serializable{
     private String name;
     private int age;
     private LocalDate birthday;

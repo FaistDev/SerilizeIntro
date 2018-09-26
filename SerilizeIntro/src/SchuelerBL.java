@@ -2,8 +2,12 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -26,21 +30,19 @@ public class SchuelerBL {
     }
     
     public void save(File f) throws Exception{
-        BufferedWriter bw = new BufferedWriter(new FileWriter(f));
+        ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f));
         for (Schueler s : schueler) {
-            bw.append(s.getName()+";"+s.getBirthday().toString()+"\n");
+            oos.writeObject(s);
         }
-        bw.flush();
-        bw.close();
+        oos.flush();
     }
     
     public void load(File f) throws Exception{
-        BufferedReader br = new BufferedReader(new FileReader(f));
-        String line;
-        while((line=br.readLine())!=null){
-            String[] parts = line.split(";");
+        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
+       Object s=null;
+        while((s=ois.readObject())!=null){
             try{
-                add(new Schueler(parts[0], LocalDate.parse(parts[1])));
+                add((Schueler) s);
             }catch(Exception e){
                 System.out.println(e.getMessage());
             }
@@ -56,7 +58,7 @@ public class SchuelerBL {
         bl.add(s1);
         bl.add(s2);
         
-        File f = new File("./data.csv");
+        File f = new File("./data.bin");
         try{
             bl.save(f);
         }catch(Exception e){
